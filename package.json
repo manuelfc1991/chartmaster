@@ -1,0 +1,24 @@
+{
+  "name": "chartmaster",
+  "version": "3.0.0",
+  "description": "Optimized Complete Charting Library with Funnel and Gauge charts",
+  "main": "dist/chartmaster.js",
+  "module": "dist/chartmaster.esm.js",
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "charts",
+    "graph",
+    "visualization",
+    "canvas",
+    "funnel",
+    "gauge"
+  ],
+  "author": "Manuel Francis Correya",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/manuelfc1991/chartmaster"
+  }
+}
