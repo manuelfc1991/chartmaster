@@ -1,6 +1,6 @@
 {
   "name": "chartmaster",
-  "version": "4.0.1",
+  "version": "4.0.1", 
   "description": "Optimized Complete Charting Library with Funnel and Gauge charts",
   "main": "dist/chartmaster.js",
   "module": "dist/chartmaster.esm.js",
