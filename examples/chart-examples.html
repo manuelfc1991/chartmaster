@@ -4,227 +4,441 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ChartMaster.js - Interactive Chart Examples</title>
+    <title>ChartMaster - Complete Examples Gallery</title>
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        * {
             margin: 0;
-            padding: 20px;
-            background-color: #f5f7fa;
-            color: #333;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 20px;
+            min-height: 100vh;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
         }
 
         h1 {
             text-align: center;
-            margin-bottom: 40px;
-            color: #2c3e50;
+            color: white;
+            font-size: 48px;
+            margin-bottom: 15px;
+            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
 
-        .chart-grid {
+        .subtitle {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 18px;
+            margin-bottom: 50px;
+        }
+
+        .charts-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
             gap: 30px;
+            margin-bottom: 40px;
         }
 
-        .chart-container {
+        .chart-card {
             background: white;
-            border-radius: 12px;
-            padding: 20px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .chart-container:hover {
+        .chart-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.25);
+        }
+
+        .chart-header {
+            margin-bottom: 20px;
         }
 
         .chart-title {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 15px;
-            color: #2c3e50;
-            text-align: center;
+            font-size: 24px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 8px;
         }
 
-        .chart-wrapper {
+        .chart-description {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .chart-canvas-wrapper {
             position: relative;
-            height: 300px;
-            width: 100%;
+            height: 400px;
+            background: #fafafa;
+            border-radius: 12px;
+            padding: 20px;
         }
 
-        .chart-actions {
-            margin-top: 15px;
+        canvas {
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        .controls {
+            margin-top: 20px;
             display: flex;
-            justify-content: center;
             gap: 10px;
+            flex-wrap: wrap;
         }
 
-        button {
-            background: #3498db;
-            color: white;
+        .btn {
+            padding: 10px 20px;
             border: none;
-            padding: 8px 16px;
-            border-radius: 6px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
             cursor: pointer;
-            font-size: 14px;
-            transition: background 0.2s ease;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
 
-        button:hover {
-            background: #2980b9;
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
         }
 
-        .instructions {
-            text-align: center;
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #f3f4f6;
+            color: #374151;
+        }
+
+        .btn-secondary:hover {
+            background: #e5e7eb;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 16px;
             margin-top: 40px;
-            color: #7f8c8d;
-            font-size: 14px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .info-box h3 {
+            font-size: 22px;
+            margin-bottom: 15px;
+        }
+
+        .info-box p {
+            line-height: 1.8;
+            opacity: 0.95;
+        }
+
+        .info-box ul {
+            margin-top: 15px;
+            margin-left: 20px;
+        }
+
+        .info-box li {
+            margin: 8px 0;
+            line-height: 1.6;
+        }
+
+        .feature-tag {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            margin: 5px 5px 5px 0;
+        }
+
+        @media (max-width: 768px) {
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 32px;
+            }
+
+            .chart-canvas-wrapper {
+                height: 300px;
+            }
         }
     </style>
 </head>
 
 <body>
     <div class="container">
-        <h1>ChartMaster.js - Interactive Chart Examples</h1>
+        <h1>📊 ChartMaster Gallery</h1>
+        <p class="subtitle">Professional charting library with 9 chart types, animations, and interactive features</p>
 
-        <div class="chart-grid">
+        <div class="charts-grid">
             <!-- Line Chart -->
-            <div class="chart-container">
-                <div class="chart-title">Line Chart</div>
-                <div class="chart-wrapper">
-                    <canvas id="lineChart"></canvas>
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h2 class="chart-title">📈 Line Chart</h2>
+                    <p class="chart-description">
+                        Perfect for showing trends over time. Features smooth curves, gradient fills,
+                        and interactive hover effects. Double-click any point for detailed analysis.
+                    </p>
+                    <div style="margin-top: 10px;">
+                        <span class="feature-tag">Gradient Fill</span>
+                        <span class="feature-tag">Smooth Curves</span>
+                        <span class="feature-tag">Shadows</span>
+                    </div>
                 </div>
-                <div class="chart-actions">
-                    <button onclick="updateLineChart()">Update Data</button>
+                <div class="chart-canvas-wrapper">
+                    <canvas id="lineCanvas" width="800" height="400"></canvas>
+                </div>
+                <div class="controls">
+                    <button class="btn btn-primary" onclick="updateLineChart()">Update Data</button>
+                    <button class="btn btn-secondary" onclick="lineChart.render()">Animate</button>
                 </div>
             </div>
 
             <!-- Bar Chart -->
-            <div class="chart-container">
-                <div class="chart-title">Bar Chart</div>
-                <div class="chart-wrapper">
-                    <canvas id="barChart"></canvas>
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h2 class="chart-title">📊 Bar Chart</h2>
+                    <p class="chart-description">
+                        Ideal for comparing discrete categories. Beautiful gradient bars with
+                        hover scaling effects and shadow depth. Great for quarterly reports.
+                    </p>
+                    <div style="margin-top: 10px;">
+                        <span class="feature-tag">Gradient Bars</span>
+                        <span class="feature-tag">Hover Scale</span>
+                        <span class="feature-tag">Rounded Corners</span>
+                    </div>
                 </div>
-                <div class="chart-actions">
-                    <button onclick="updateBarChart()">Update Data</button>
+                <div class="chart-canvas-wrapper">
+                    <canvas id="barCanvas" width="800" height="400"></canvas>
+                </div>
+                <div class="controls">
+                    <button class="btn btn-primary" onclick="updateBarChart()">Update Data</button>
+                    <button class="btn btn-secondary" onclick="barChart.render()">Animate</button>
                 </div>
             </div>
 
             <!-- Horizontal Bar Chart -->
-            <div class="chart-container">
-                <div class="chart-title">Horizontal Bar Chart</div>
-                <div class="chart-wrapper">
-                    <canvas id="horizontalBarChart"></canvas>
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h2 class="chart-title">↔️ Horizontal Bar Chart</h2>
+                    <p class="chart-description">
+                        Perfect for ranking and comparison with long labels. Horizontal orientation
+                        makes it easy to read category names and compare values at a glance.
+                    </p>
+                    <div style="margin-top: 10px;">
+                        <span class="feature-tag">Horizontal Layout</span>
+                        <span class="feature-tag">Long Labels</span>
+                        <span class="feature-tag">Gradient</span>
+                    </div>
                 </div>
-                <div class="chart-actions">
-                    <button onclick="updateHorizontalBarChart()">Update Data</button>
+                <div class="chart-canvas-wrapper">
+                    <canvas id="horizontalBarCanvas" width="800" height="400"></canvas>
+                </div>
+                <div class="controls">
+                    <button class="btn btn-primary" onclick="updateHorizontalBarChart()">Update Data</button>
+                    <button class="btn btn-secondary" onclick="horizontalBarChart.render()">Animate</button>
                 </div>
             </div>
 
             <!-- Pie Chart -->
-            <div class="chart-container">
-                <div class="chart-title">Pie Chart</div>
-                <div class="chart-wrapper">
-                    <canvas id="pieChart"></canvas>
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h2 class="chart-title">🥧 Pie Chart</h2>
+                    <p class="chart-description">
+                        Classic circular chart showing part-to-whole relationships. Features
+                        smooth animations, hover offset effects, and percentage calculations.
+                    </p>
+                    <div style="margin-top: 10px;">
+                        <span class="feature-tag">Hover Offset</span>
+                        <span class="feature-tag">Percentages</span>
+                        <span class="feature-tag">Shadows</span>
+                    </div>
                 </div>
-                <div class="chart-actions">
-                    <button onclick="updatePieChart()">Update Data</button>
+                <div class="chart-canvas-wrapper">
+                    <canvas id="pieCanvas" width="800" height="400"></canvas>
+                </div>
+                <div class="controls">
+                    <button class="btn btn-primary" onclick="updatePieChart()">Update Data</button>
+                    <button class="btn btn-secondary" onclick="pieChart.render()">Animate</button>
                 </div>
             </div>
 
             <!-- Doughnut Chart -->
-            <div class="chart-container">
-                <div class="chart-title">Doughnut Chart</div>
-                <div class="chart-wrapper">
-                    <canvas id="doughnutChart"></canvas>
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h2 class="chart-title">🍩 Doughnut Chart</h2>
+                    <p class="chart-description">
+                        Modern take on pie charts with a hollow center. Perfect for displaying
+                        proportions with a contemporary aesthetic. Great for dashboards.
+                    </p>
+                    <div style="margin-top: 10px;">
+                        <span class="feature-tag">Hollow Center</span>
+                        <span class="feature-tag">Modern Design</span>
+                        <span class="feature-tag">Interactive</span>
+                    </div>
                 </div>
-                <div class="chart-actions">
-                    <button onclick="updateDoughnutChart()">Update Data</button>
+                <div class="chart-canvas-wrapper">
+                    <canvas id="doughnutCanvas" width="800" height="400"></canvas>
+                </div>
+                <div class="controls">
+                    <button class="btn btn-primary" onclick="updateDoughnutChart()">Update Data</button>
+                    <button class="btn btn-secondary" onclick="doughnutChart.render()">Animate</button>
                 </div>
             </div>
 
             <!-- Funnel Chart -->
-            <div class="chart-container">
-                <div class="chart-title">Funnel Chart</div>
-                <div class="chart-wrapper">
-                    <canvas id="funnelChart"></canvas>
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h2 class="chart-title">🔽 Funnel Chart</h2>
+                    <p class="chart-description">
+                        Visualize processes and conversion rates. Perfect for sales funnels,
+                        user journeys, and multi-stage processes. Shows data flow clearly.
+                    </p>
+                    <div style="margin-top: 10px;">
+                        <span class="feature-tag">Conversion Flow</span>
+                        <span class="feature-tag">Auto-Sort</span>
+                        <span class="feature-tag">Embedded Labels</span>
+                    </div>
                 </div>
-                <div class="chart-actions">
-                    <button onclick="updateFunnelChart()">Update Data</button>
+                <div class="chart-canvas-wrapper">
+                    <canvas id="funnelCanvas" width="800" height="400"></canvas>
+                </div>
+                <div class="controls">
+                    <button class="btn btn-primary" onclick="updateFunnelChart()">Update Data</button>
+                    <button class="btn btn-secondary" onclick="funnelChart.render()">Animate</button>
                 </div>
             </div>
 
             <!-- Gauge Chart -->
-            <div class="chart-container">
-                <div class="chart-title">Gauge Chart</div>
-                <div class="chart-wrapper">
-                    <canvas id="gaugeChart"></canvas>
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h2 class="chart-title">⚡ Gauge Chart</h2>
+                    <p class="chart-description">
+                        Display single values with visual context. Features color-coded ranges,
+                        animated needle, and clear value display. Perfect for KPIs and metrics.
+                    </p>
+                    <div style="margin-top: 10px;">
+                        <span class="feature-tag">Color Ranges</span>
+                        <span class="feature-tag">Animated Needle</span>
+                        <span class="feature-tag">KPI Display</span>
+                    </div>
                 </div>
-                <div class="chart-actions">
-                    <button onclick="updateGaugeChart()">Update Data</button>
+                <div class="chart-canvas-wrapper">
+                    <canvas id="gaugeCanvas" width="800" height="400"></canvas>
+                </div>
+                <div class="controls">
+                    <button class="btn btn-primary" onclick="updateGaugeChart()">Update Value</button>
+                    <button class="btn btn-secondary" onclick="gaugeChart.render()">Animate</button>
                 </div>
             </div>
 
             <!-- Waterfall Chart -->
-            <div class="chart-container">
-                <div class="chart-title">Waterfall Chart</div>
-                <div class="chart-wrapper">
-                    <canvas id="waterfallChart"></canvas>
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h2 class="chart-title">💧 Waterfall Chart</h2>
+                    <p class="chart-description">
+                        Visualize cumulative effects of sequential positive and negative values.
+                        Perfect for financial statements, budget analysis, and understanding how
+                        an initial value is affected by intermediate values.
+                    </p>
+                    <div style="margin-top: 10px;">
+                        <span class="feature-tag">Cumulative Flow</span>
+                        <span class="feature-tag">Connector Lines</span>
+                        <span class="feature-tag">Value Labels</span>
+                    </div>
                 </div>
-                <div class="chart-actions">
-                    <button onclick="updateWaterfallChart()">Update Data</button>
+                <div class="chart-canvas-wrapper">
+                    <canvas id="waterfallCanvas" width="800" height="400"></canvas>
+                </div>
+                <div class="controls">
+                    <button class="btn btn-primary" onclick="updateWaterfallChart()">Update Data</button>
+                    <button class="btn btn-secondary" onclick="waterfallChart.render()">Animate</button>
                 </div>
             </div>
 
             <!-- Conversion Funnel Chart -->
-            <div class="chart-container">
-                <div class="chart-title">Conversion Funnel Chart</div>
-                <div class="chart-wrapper">
-                    <canvas id="conversionFunnelChart"></canvas>
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h2 class="chart-title">🎯 Conversion Funnel Chart</h2>
+                    <p class="chart-description">
+                        Advanced funnel with conversion rate percentages between stages.
+                        Perfect for analyzing sales pipelines, user journeys, and multi-step
+                        processes with detailed conversion metrics.
+                    </p>
+                    <div style="margin-top: 10px;">
+                        <span class="feature-tag">Conversion Rates</span>
+                        <span class="feature-tag">Drop-off Analysis</span>
+                        <span class="feature-tag">Stage Metrics</span>
+                    </div>
                 </div>
-                <div class="chart-actions">
-                    <button onclick="updateConversionFunnelChart()">Update Data</button>
+                <div class="chart-canvas-wrapper">
+                    <canvas id="conversionFunnelCanvas" width="800" height="400"></canvas>
+                </div>
+                <div class="controls">
+                    <button class="btn btn-primary" onclick="updateConversionFunnelChart()">Update Data</button>
+                    <button class="btn btn-secondary" onclick="conversionFunnelChart.render()">Animate</button>
                 </div>
             </div>
         </div>
 
-        <div class="instructions">
-            <p>Hover over charts to see tooltips. Click on data points to view detailed information.</p>
-            <p>Double-click on charts to open detailed view (where supported).</p>
+        <div class="info-box">
+            <h3>✨ Interactive Features</h3>
+            <p>All charts include powerful interactive capabilities:</p>
+            <ul>
+                <li><strong>Hover Effects:</strong> Move your mouse over any chart element to see detailed tooltips with
+                    smooth animations</li>
+                <li><strong>Double-Click Analysis:</strong> Double-click any data point to open a detailed view with
+                    statistics and custom metrics</li>
+                <li><strong>Responsive Design:</strong> All charts automatically resize to fit their containers</li>
+                <li><strong>Touch Support:</strong> Full mobile support with long-press gestures for detailed views</li>
+                <li><strong>Smooth Animations:</strong> Beautiful entrance animations with customizable easing functions
+                </li>
+                <li><strong>Visual Effects:</strong> Gradients, shadows, and hover scaling for a modern look</li>
+                <li><strong>Customizable:</strong> Extensive options for colors, fonts, layouts, and behaviors</li>
+                <li><strong>Conversion Funnel:</strong> Track stage-by-stage conversion rates with percentage labels and
+                    drop-off analysis</li>
+            </ul>
         </div>
     </div>
+
+    <!-- Include ChartMaster library -->
     <script src="../dist/chartmaster.js"></script>
+
+    <!-- Chart Examples -->
     <script>
-        // Initialize charts when the page loads
-        document.addEventListener('DOMContentLoaded', function () {
-            initLineChart();
-            initBarChart();
-            initHorizontalBarChart();
-            initPieChart();
-            initDoughnutChart();
-            initFunnelChart();
-            initGaugeChart();
-            initWaterfallChart();
-            initConversionFunnelChart();
+        // Store chart instances globally
+        let lineChart, barChart, horizontalBarChart, pieChart, doughnutChart, funnelChart, gaugeChart, waterfallChart, conversionFunnelChart;
+
+        // Initialize all charts when page loads
+        window.addEventListener('DOMContentLoaded', function () {
+            initializeCharts();
         });
 
-        // Line Chart
-        let lineChart;
-        function initLineChart() {
-            lineChart = new ChartMaster('lineChart', {
+        function initializeCharts() {
+            // 1. Line Chart
+            lineChart = new ChartMaster('lineCanvas', {
                 type: 'line',
                 data: {
                     labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
                     datasets: [{
-                        data: [65, 59, 80, 81, 56, 55, 40],
-                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                        borderColor: 'rgba(54, 162, 235, 1)',
+                        data: [65, 78, 90, 81, 96, 105, 112],
+                        borderColor: '#3b82f6',
+                        backgroundColor: '#3b82f6',
                         borderWidth: 3
                     }]
                 },
@@ -232,371 +446,375 @@
                     plugins: {
                         title: {
                             display: true,
-                            text: 'Monthly Sales Data'
+                            text: 'Monthly Revenue Growth ($K)',
+                            font: { size: 20, weight: 'bold' }
                         },
                         legend: {
                             display: false
+                        },
+                        detailedView: {
+                            enabled: true,
+                            trigger: 'doubleClick',
+                            showStats: true,
+                            customFields: [
+                                {
+                                    label: 'Growth vs Previous',
+                                    value: (data, index, chart) => {
+                                        if (index === 0) return 'N/A';
+                                        const prev = chart.data.datasets[0].data[index - 1];
+                                        const growth = ((data.value - prev) / prev * 100).toFixed(1);
+                                        return `${growth > 0 ? '+' : ''}${growth}%`;
+                                    }
+                                },
+                                {
+                                    label: 'Target Achievement',
+                                    value: (data) => {
+                                        const target = 100;
+                                        const achievement = (data.value / target * 100).toFixed(0);
+                                        return `${achievement}%`;
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    elements: {
+                        line: {
+                            tension: 0.4,
+                            fill: true,
+                            gradient: true,
+                            shadow: true
+                        },
+                        point: {
+                            radius: 4,
+                            hoverRadius: 7,
+                            shadow: true
                         }
                     },
                     scales: {
                         y: {
-                            beginAtZero: true
+                            beginAtZero: true,
+                            grid: { color: 'rgba(0, 0, 0, 0.05)' }
+                        },
+                        x: {
+                            grid: { display: false }
                         }
                     }
                 }
             });
-        }
 
-        function updateLineChart() {
-            const newData = Array.from({ length: 7 }, () => Math.floor(Math.random() * 100));
-            lineChart.update({
-                data: {
-                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
-                    datasets: [{
-                        data: newData,
-                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                        borderColor: 'rgba(54, 162, 235, 1)',
-                        borderWidth: 3
-                    }]
-                }
-            });
-        }
-
-        // Bar Chart
-        let barChart;
-        function initBarChart() {
-            barChart = new ChartMaster('barChart', {
+            // 2. Bar Chart
+            barChart = new ChartMaster('barCanvas', {
                 type: 'bar',
                 data: {
-                    labels: ['Product A', 'Product B', 'Product C', 'Product D', 'Product E'],
+                    labels: ['Q1', 'Q2', 'Q3', 'Q4'],
                     datasets: [{
-                        data: [12, 19, 3, 5, 2],
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 0.8)',
-                            'rgba(54, 162, 235, 0.8)',
-                            'rgba(255, 206, 86, 0.8)',
-                            'rgba(75, 192, 192, 0.8)',
-                            'rgba(153, 102, 255, 0.8)'
-                        ],
-                        borderColor: [
-                            'rgba(255, 99, 132, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 206, 86, 1)',
-                            'rgba(75, 192, 192, 1)',
-                            'rgba(153, 102, 255, 1)'
-                        ],
-                        borderWidth: 1
+                        data: [450, 520, 480, 590],
+                        backgroundColor: ['#3b82f6', '#10b981', '#f59e0b', '#ef4444']
                     }]
                 },
                 options: {
                     plugins: {
                         title: {
                             display: true,
-                            text: 'Product Sales'
+                            text: 'Quarterly Sales Performance',
+                            font: { size: 20, weight: 'bold' }
+                        },
+                        legend: {
+                            display: false
+                        },
+                        detailedView: {
+                            enabled: true,
+                            trigger: 'doubleClick',
+                            showStats: true,
+                            customFields: [
+                                {
+                                    label: 'YoY Growth',
+                                    value: (data) => {
+                                        const growth = (Math.random() * 30 - 5).toFixed(1);
+                                        return `${growth > 0 ? '+' : ''}${growth}%`;
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    elements: {
+                        bar: {
+                            gradient: true,
+                            shadow: true,
+                            hoverScale: 1.05,
+                            borderRadius: 8
                         }
                     },
                     scales: {
                         y: {
-                            beginAtZero: true
+                            beginAtZero: true,
+                            grid: { color: 'rgba(0, 0, 0, 0.05)' }
+                        },
+                        x: {
+                            grid: { display: false }
                         }
                     }
                 }
             });
-        }
 
-        function updateBarChart() {
-            const newData = Array.from({ length: 5 }, () => Math.floor(Math.random() * 20));
-            barChart.update({
+            // 3. Horizontal Bar Chart
+            horizontalBarChart = new ChartMaster('horizontalBarCanvas', {
+                type: 'horizontalBar',
                 data: {
                     labels: ['Product A', 'Product B', 'Product C', 'Product D', 'Product E'],
                     datasets: [{
-                        data: newData,
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 0.8)',
-                            'rgba(54, 162, 235, 0.8)',
-                            'rgba(255, 206, 86, 0.8)',
-                            'rgba(75, 192, 192, 0.8)',
-                            'rgba(153, 102, 255, 0.8)'
-                        ],
-                        borderColor: [
-                            'rgba(255, 99, 132, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 206, 86, 1)',
-                            'rgba(75, 192, 192, 1)',
-                            'rgba(153, 102, 255, 1)'
-                        ],
-                        borderWidth: 1
-                    }]
-                }
-            });
-        }
-
-        // Horizontal Bar Chart
-        let horizontalBarChart;
-        function initHorizontalBarChart() {
-            horizontalBarChart = new ChartMaster('horizontalBarChart', {
-                type: 'horizontalBar',
-                data: {
-                    labels: ['Marketing', 'Sales', 'IT', 'HR', 'Finance'],
-                    datasets: [{
-                        data: [12, 19, 3, 5, 2],
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 0.8)',
-                            'rgba(54, 162, 235, 0.8)',
-                            'rgba(255, 206, 86, 0.8)',
-                            'rgba(75, 192, 192, 0.8)',
-                            'rgba(153, 102, 255, 0.8)'
-                        ],
-                        borderColor: [
-                            'rgba(255, 99, 132, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 206, 86, 1)',
-                            'rgba(75, 192, 192, 1)',
-                            'rgba(153, 102, 255, 1)'
-                        ],
-                        borderWidth: 1
+                        data: [150, 230, 180, 270, 195],
+                        backgroundColor: ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6']
                     }]
                 },
                 options: {
                     plugins: {
                         title: {
                             display: true,
-                            text: 'Department Budget Allocation'
+                            text: 'Sales by Product Category',
+                            font: { size: 20, weight: 'bold' }
+                        },
+                        legend: {
+                            display: false
+                        },
+                        detailedView: {
+                            enabled: true,
+                            trigger: 'doubleClick',
+                            showStats: true,
+                            customFields: [
+                                {
+                                    label: 'Market Share',
+                                    value: (data, index, chart) => {
+                                        const total = chart.data.datasets[0].data.reduce((a, b) => a + b, 0);
+                                        return ((data.value / total) * 100).toFixed(1) + '%';
+                                    }
+                                },
+                                {
+                                    label: 'Ranking',
+                                    value: (data, index, chart) => {
+                                        const sorted = [...chart.data.datasets[0].data].sort((a, b) => b - a);
+                                        return '#' + (sorted.indexOf(data.value) + 1);
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    elements: {
+                        bar: {
+                            gradient: true,
+                            shadow: true,
+                            hoverScale: 1.05,
+                            borderRadius: 8
                         }
                     },
                     scales: {
                         x: {
-                            beginAtZero: true
+                            beginAtZero: true,
+                            grid: { color: 'rgba(0, 0, 0, 0.05)' }
+                        },
+                        y: {
+                            grid: { display: false }
                         }
                     }
                 }
             });
-        }
 
-        function updateHorizontalBarChart() {
-            const newData = Array.from({ length: 5 }, () => Math.floor(Math.random() * 20));
-            horizontalBarChart.update({
-                data: {
-                    labels: ['Marketing', 'Sales', 'IT', 'HR', 'Finance'],
-                    datasets: [{
-                        data: newData,
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 0.8)',
-                            'rgba(54, 162, 235, 0.8)',
-                            'rgba(255, 206, 86, 0.8)',
-                            'rgba(75, 192, 192, 0.8)',
-                            'rgba(153, 102, 255, 0.8)'
-                        ],
-                        borderColor: [
-                            'rgba(255, 99, 132, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 206, 86, 1)',
-                            'rgba(75, 192, 192, 1)',
-                            'rgba(153, 102, 255, 1)'
-                        ],
-                        borderWidth: 1
-                    }]
-                }
-            });
-        }
-
-        // Pie Chart
-        let pieChart;
-        function initPieChart() {
-            pieChart = new ChartMaster('pieChart', {
+            // 4. Pie Chart
+            pieChart = new ChartMaster('pieCanvas', {
                 type: 'pie',
                 data: {
-                    labels: ['Direct', 'Social Media', 'Email', 'Referral', 'Other'],
+                    labels: ['Desktop', 'Mobile', 'Tablet', 'Other'],
                     datasets: [{
-                        data: [300, 150, 100, 50, 75],
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 0.8)',
-                            'rgba(54, 162, 235, 0.8)',
-                            'rgba(255, 206, 86, 0.8)',
-                            'rgba(75, 192, 192, 0.8)',
-                            'rgba(153, 102, 255, 0.8)'
-                        ],
-                        borderColor: [
-                            'rgba(255, 99, 132, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 206, 86, 1)',
-                            'rgba(75, 192, 192, 1)',
-                            'rgba(153, 102, 255, 1)'
-                        ],
-                        borderWidth: 2
+                        data: [45, 35, 15, 5],
+                        backgroundColor: ['#3b82f6', '#10b981', '#f59e0b', '#ef4444']
                     }]
                 },
                 options: {
                     plugins: {
                         title: {
                             display: true,
-                            text: 'Traffic Sources'
+                            text: 'Traffic Sources Distribution',
+                            font: { size: 20, weight: 'bold' }
+                        },
+                        legend: {
+                            display: true,
+                            position: 'bottom',
+                            labels: {
+                                padding: 15,
+                                font: { size: 13 }
+                            }
+                        },
+                        detailedView: {
+                            enabled: true,
+                            trigger: 'doubleClick',
+                            showStats: true
+                        }
+                    },
+                    elements: {
+                        arc: {
+                            borderWidth: 3,
+                            hoverOffset: 15,
+                            shadow: true
                         }
                     }
                 }
             });
-        }
 
-        function updatePieChart() {
-            const newData = Array.from({ length: 5 }, () => Math.floor(Math.random() * 300) + 50);
-            pieChart.update({
-                data: {
-                    labels: ['Direct', 'Social Media', 'Email', 'Referral', 'Other'],
-                    datasets: [{
-                        data: newData,
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 0.8)',
-                            'rgba(54, 162, 235, 0.8)',
-                            'rgba(255, 206, 86, 0.8)',
-                            'rgba(75, 192, 192, 0.8)',
-                            'rgba(153, 102, 255, 0.8)'
-                        ],
-                        borderColor: [
-                            'rgba(255, 99, 132, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 206, 86, 1)',
-                            'rgba(75, 192, 192, 1)',
-                            'rgba(153, 102, 255, 1)'
-                        ],
-                        borderWidth: 2
-                    }]
-                }
-            });
-        }
-
-        // Doughnut Chart
-        let doughnutChart;
-        function initDoughnutChart() {
-            doughnutChart = new ChartMaster('doughnutChart', {
+            // 5. Doughnut Chart
+            doughnutChart = new ChartMaster('doughnutCanvas', {
                 type: 'doughnut',
                 data: {
-                    labels: ['Desktop', 'Mobile', 'Tablet'],
+                    labels: ['Completed', 'In Progress', 'Pending', 'Cancelled'],
                     datasets: [{
-                        data: [60, 30, 10],
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 0.8)',
-                            'rgba(54, 162, 235, 0.8)',
-                            'rgba(255, 206, 86, 0.8)'
-                        ],
-                        borderColor: [
-                            'rgba(255, 99, 132, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 206, 86, 1)'
-                        ],
-                        borderWidth: 2
+                        data: [320, 150, 80, 50],
+                        backgroundColor: ['#10b981', '#3b82f6', '#f59e0b', '#ef4444']
                     }]
                 },
                 options: {
                     plugins: {
                         title: {
                             display: true,
-                            text: 'Device Usage'
+                            text: 'Project Status Overview',
+                            font: { size: 20, weight: 'bold' }
+                        },
+                        legend: {
+                            display: true,
+                            position: 'right',
+                            labels: {
+                                padding: 15,
+                                font: { size: 13 }
+                            }
+                        },
+                        detailedView: {
+                            enabled: true,
+                            trigger: 'doubleClick',
+                            showStats: true,
+                            customFields: [
+                                {
+                                    label: 'Completion Rate',
+                                    value: (data, index, chart) => {
+                                        if (index === 0) {
+                                            const total = chart.data.datasets[0].data.reduce((a, b) => a + b, 0);
+                                            return ((data.value / total) * 100).toFixed(1) + '%';
+                                        }
+                                        return 'N/A';
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    elements: {
+                        arc: {
+                            borderWidth: 3,
+                            hoverOffset: 15,
+                            shadow: true
                         }
                     }
                 }
             });
-        }
 
-        function updateDoughnutChart() {
-            const newData = Array.from({ length: 3 }, () => Math.floor(Math.random() * 60) + 10);
-            doughnutChart.update({
-                data: {
-                    labels: ['Desktop', 'Mobile', 'Tablet'],
-                    datasets: [{
-                        data: newData,
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 0.8)',
-                            'rgba(54, 162, 235, 0.8)',
-                            'rgba(255, 206, 86, 0.8)'
-                        ],
-                        borderColor: [
-                            'rgba(255, 99, 132, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 206, 86, 1)'
-                        ],
-                        borderWidth: 2
-                    }]
-                }
-            });
-        }
-
-        // Funnel Chart
-        let funnelChart;
-        function initFunnelChart() {
-            funnelChart = new ChartMaster('funnelChart', {
+            // 6. Funnel Chart
+            funnelChart = new ChartMaster('funnelCanvas', {
                 type: 'funnel',
                 data: {
-                    labels: ['Visitors', 'Leads', 'MQL', 'SQL', 'Customers'],
+                    labels: ['Visitors', 'Sign Ups', 'Active Users', 'Paid Users', 'Advocates'],
                     datasets: [{
-                        data: [1000, 800, 600, 400, 200],
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 0.8)',
-                            'rgba(255, 159, 64, 0.8)',
-                            'rgba(255, 205, 86, 0.8)',
-                            'rgba(75, 192, 192, 0.8)',
-                            'rgba(54, 162, 235, 0.8)'
-                        ]
+                        data: [10000, 5000, 3000, 1500, 500],
+                        backgroundColor: ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6']
                     }]
                 },
                 options: {
                     plugins: {
                         title: {
                             display: true,
-                            text: 'Sales Funnel'
+                            text: 'User Conversion Funnel',
+                            font: { size: 20, weight: 'bold' }
+                        },
+                        legend: {
+                            display: false
+                        },
+                        detailedView: {
+                            enabled: true,
+                            trigger: 'doubleClick',
+                            showStats: true,
+                            customFields: [
+                                {
+                                    label: 'Conversion Rate',
+                                    value: (data, index, chart) => {
+                                        if (index === 0) return 'N/A';
+                                        const prev = chart.data.datasets[0].data[index - 1];
+                                        return ((data.value / prev) * 100).toFixed(1) + '%';
+                                    }
+                                },
+                                {
+                                    label: 'Drop Off',
+                                    value: (data, index, chart) => {
+                                        if (index === 0) return 'N/A';
+                                        const prev = chart.data.datasets[0].data[index - 1];
+                                        const dropOff = prev - data.value;
+                                        return dropOff.toLocaleString();
+                                    }
+                                }
+                            ]
                         }
                     },
                     funnel: {
+                        width: 0.7,
+                        gap: 0.02,
                         sort: 'desc'
                     }
                 }
             });
-        }
 
-        function updateFunnelChart() {
-            const base = Math.floor(Math.random() * 500) + 500;
-            const newData = [
-                base,
-                Math.floor(base * 0.8),
-                Math.floor(base * 0.6),
-                Math.floor(base * 0.4),
-                Math.floor(base * 0.2)
-            ];
-            funnelChart.update({
-                data: {
-                    labels: ['Visitors', 'Leads', 'MQL', 'SQL', 'Customers'],
-                    datasets: [{
-                        data: newData,
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 0.8)',
-                            'rgba(255, 159, 64, 0.8)',
-                            'rgba(255, 205, 86, 0.8)',
-                            'rgba(75, 192, 192, 0.8)',
-                            'rgba(54, 162, 235, 0.8)'
-                        ]
-                    }]
-                }
-            });
-        }
-
-        // Gauge Chart
-        let gaugeChart;
-        function initGaugeChart() {
-            gaugeChart = new ChartMaster('gaugeChart', {
+            // 7. Gauge Chart
+            gaugeChart = new ChartMaster('gaugeCanvas', {
                 type: 'gauge',
                 data: {
-                    labels: ['Performance'],
+                    labels: ['Performance Score'],
                     datasets: [{
-                        data: [75]
+                        data: [78]
                     }]
                 },
                 options: {
                     plugins: {
                         title: {
                             display: true,
-                            text: 'Performance Meter'
+                            text: 'System Performance Monitor',
+                            font: { size: 20, weight: 'bold' }
+                        },
+                        legend: {
+                            display: false
+                        },
+                        detailedView: {
+                            enabled: true,
+                            trigger: 'doubleClick',
+                            showStats: false,
+                            customFields: [
+                                {
+                                    label: 'Status',
+                                    value: (data) => {
+                                        if (data.value < 33) return '🔴 Critical';
+                                        if (data.value < 66) return '🟡 Warning';
+                                        return '🟢 Excellent';
+                                    }
+                                },
+                                {
+                                    label: 'Uptime',
+                                    value: () => '99.8%'
+                                },
+                                {
+                                    label: 'Last Check',
+                                    value: () => new Date().toLocaleTimeString()
+                                }
+                            ]
                         }
                     },
                     gauge: {
+                        startAngle: -135,
+                        endAngle: 135,
+                        thickness: 0.22,
+                        showValue: true,
+                        valueFormat: (value) => value.toFixed(0) + '%',
                         ranges: [
                             { min: 0, max: 33, color: '#ef4444' },
                             { min: 33, max: 66, color: '#f59e0b' },
@@ -605,13 +823,282 @@
                     }
                 }
             });
+
+            // 8. Waterfall Chart
+            waterfallChart = new ChartMaster('waterfallCanvas', {
+                type: 'waterfall',
+                data: {
+                    labels: ['Starting Balance', 'Revenue', 'Cost of Sales', 'Operating Expenses', 'Taxes', 'Ending Balance'],
+                    datasets: [{
+                        data: [10000, 5500, -2200, -1800, -900, 10600],
+                        isTotal: [true, false, false, false, false, true],
+                        backgroundColor: ['#3b82f6', '#10b981', '#ef4444', '#ef4444', '#ef4444', '#3b82f6']
+                    }]
+                },
+                options: {
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Income Statement Waterfall',
+                            font: { size: 20, weight: 'bold' }
+                        },
+                        legend: {
+                            display: false
+                        },
+                        detailedView: {
+                            enabled: true,
+                            trigger: 'doubleClick',
+                            showStats: true,
+                            customFields: [
+                                {
+                                    label: 'Type',
+                                    value: (data, index, chart) => {
+                                        const isTotal = chart.data.datasets[0].isTotal[index];
+                                        if (isTotal) return '📊 Total';
+                                        return data.value > 0 ? '📈 Increase' : '📉 Decrease';
+                                    }
+                                },
+                                {
+                                    label: 'Impact',
+                                    value: (data, index, chart) => {
+                                        if (index === 0) return 'Starting point';
+                                        const total = chart.data.datasets[0].data
+                                            .filter((_, i) => !chart.data.datasets[0].isTotal[i])
+                                            .reduce((sum, val) => sum + Math.abs(val), 0);
+                                        const impact = ((Math.abs(data.value) / total) * 100).toFixed(1);
+                                        return impact + '% of total changes';
+                                    }
+                                },
+                                {
+                                    label: 'Running Total',
+                                    value: (data, index, chart) => {
+                                        let runningTotal = chart.data.datasets[0].data[0];
+                                        for (let i = 1; i <= index; i++) {
+                                            if (!chart.data.datasets[0].isTotal[i]) {
+                                                runningTotal += chart.data.datasets[0].data[i];
+                                            } else {
+                                                runningTotal = chart.data.datasets[0].data[i];
+                                            }
+                                        }
+                                        return '$' + runningTotal.toLocaleString();
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    waterfall: {
+                        positiveColor: '#10b981',
+                        negativeColor: '#ef4444',
+                        totalColor: '#3b82f6',
+                        connectorLine: true,
+                        connectorColor: 'rgba(0, 0, 0, 0.3)',
+                        connectorStyle: 'dashed',
+                        showValues: true
+                    },
+                    elements: {
+                        bar: {
+                            gradient: true,
+                            shadow: true,
+                            hoverScale: 1.05,
+                            borderRadius: 8
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            grid: { color: 'rgba(0, 0, 0, 0.05)' }
+                        },
+                        x: {
+                            grid: { display: false }
+                        }
+                    }
+                }
+            });
+
+            // 9. Conversion Funnel Chart
+            conversionFunnelChart = new ChartMaster('conversionFunnelCanvas', {
+                type: 'conversionFunnel',
+                data: {
+                    labels: ['New Lead', 'Working - Contacted', 'Contacted - Interested', 'Closed - Committed'],
+                    datasets: [{
+                        data: [74, 57, 55, 14],
+                        backgroundColor: ['#6BA3F9', '#6BA3F9', '#6BA3F9', '#10b981']
+                    }]
+                },
+                options: {
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Lead Funnel 2025',
+                            font: { size: 22, weight: 'bold' },
+                            align: 'start',
+                            color: '#1a1a1a'
+                        },
+                        legend: {
+                            display: false
+                        },
+                        detailedView: {
+                            enabled: true,
+                            trigger: 'doubleClick',
+                            showStats: true,
+                            customFields: [
+                                {
+                                    label: 'Stage Conversion',
+                                    value: (data, index, chart) => {
+                                        if (index === 0) return 'Starting point';
+                                        const prevValue = chart.data.datasets[0].data[index - 1];
+                                        const rate = ((data.value / prevValue) * 100).toFixed(1);
+                                        return `${rate}% from previous stage`;
+                                    }
+                                },
+                                {
+                                    label: 'Drop Off Count',
+                                    value: (data, index, chart) => {
+                                        if (index === 0) return 'N/A';
+                                        const prev = chart.data.datasets[0].data[index - 1];
+                                        const dropOff = prev - data.value;
+                                        return `${dropOff} leads lost`;
+                                    }
+                                },
+                                {
+                                    label: 'Overall Conversion',
+                                    value: (data, index, chart) => {
+                                        const firstValue = chart.data.datasets[0].data[0];
+                                        const rate = ((data.value / firstValue) * 100).toFixed(1);
+                                        return `${rate}% from start`;
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    conversionFunnel: {
+                        width: 0.8,
+                        gap: 0,
+                        sort: 'desc',
+                        showConversionRates: true,
+                        conversionRatePosition: 'line',
+                        conversionRateFont: {
+                            size: 13,
+                            weight: '600',
+                            color: '#333'
+                        },
+                        showValues: true,
+                        valueFontSize: 18,
+                        labelFontSize: 13,
+                        connectorLineWidth: 2,
+                        connectorLineColor: '#fff'
+                    },
+                    elements: {
+                        bar: {
+                            shadow: true,
+                            borderWidth: 0
+                        }
+                    },
+                    layout: {
+                        padding: {
+                            top: 40,
+                            right: 200,  // More space for overall conversion rate
+                            bottom: 60,
+                            left: 40
+                        }
+                    }
+                }
+            });
+        }
+
+        // Update Functions
+        function updateLineChart() {
+            const newData = Array.from({ length: 7 }, () => Math.floor(Math.random() * 60) + 50);
+            lineChart.update({
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+                    datasets: [{
+                        data: newData,
+                        borderColor: '#3b82f6',
+                        backgroundColor: '#3b82f6',
+                        borderWidth: 3
+                    }]
+                }
+            });
+        }
+
+        function updateBarChart() {
+            const newData = Array.from({ length: 4 }, () => Math.floor(Math.random() * 200) + 400);
+            barChart.update({
+                data: {
+                    labels: ['Q1', 'Q2', 'Q3', 'Q4'],
+                    datasets: [{
+                        data: newData,
+                        backgroundColor: ['#3b82f6', '#10b981', '#f59e0b', '#ef4444']
+                    }]
+                }
+            });
+        }
+
+        function updateHorizontalBarChart() {
+            const newData = Array.from({ length: 5 }, () => Math.floor(Math.random() * 150) + 120);
+            horizontalBarChart.update({
+                data: {
+                    labels: ['Product A', 'Product B', 'Product C', 'Product D', 'Product E'],
+                    datasets: [{
+                        data: newData,
+                        backgroundColor: ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6']
+                    }]
+                }
+            });
+        }
+
+        function updatePieChart() {
+            const newData = Array.from({ length: 4 }, () => Math.floor(Math.random() * 40) + 10);
+            pieChart.update({
+                data: {
+                    labels: ['Desktop', 'Mobile', 'Tablet', 'Other'],
+                    datasets: [{
+                        data: newData,
+                        backgroundColor: ['#3b82f6', '#10b981', '#f59e0b', '#ef4444']
+                    }]
+                }
+            });
+        }
+
+        function updateDoughnutChart() {
+            const newData = Array.from({ length: 4 }, () => Math.floor(Math.random() * 200) + 50);
+            doughnutChart.update({
+                data: {
+                    labels: ['Completed', 'In Progress', 'Pending', 'Cancelled'],
+                    datasets: [{
+                        data: newData,
+                        backgroundColor: ['#10b981', '#3b82f6', '#f59e0b', '#ef4444']
+                    }]
+                }
+            });
+        }
+
+        function updateFunnelChart() {
+            const base = Math.floor(Math.random() * 5000) + 8000;
+            const newData = [
+                base,
+                Math.floor(base * 0.5),
+                Math.floor(base * 0.3),
+                Math.floor(base * 0.15),
+                Math.floor(base * 0.05)
+            ];
+            funnelChart.update({
+                data: {
+                    labels: ['Visitors', 'Sign Ups', 'Active Users', 'Paid Users', 'Advocates'],
+                    datasets: [{
+                        data: newData,
+                        backgroundColor: ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6']
+                    }]
+                }
+            });
         }
 
         function updateGaugeChart() {
             const newValue = Math.floor(Math.random() * 100);
             gaugeChart.update({
                 data: {
-                    labels: ['Performance'],
+                    labels: ['Performance Score'],
                     datasets: [{
                         data: [newValue]
                     }]
@@ -619,91 +1106,38 @@
             });
         }
 
-        // Waterfall Chart
-        let waterfallChart;
-        function initWaterfallChart() {
-            waterfallChart = new ChartMaster('waterfallChart', {
-                type: 'waterfall',
-                data: {
-                    labels: ['Start', 'Revenue', 'Expenses', 'Investments', 'End'],
-                    datasets: [{
-                        data: [1000, 500, -300, 200, 1400],
-                        isTotal: [false, false, false, false, true]
-                    }]
-                },
-                options: {
-                    plugins: {
-                        title: {
-                            display: true,
-                            text: 'Financial Flow'
-                        }
-                    },
-                    waterfall: {
-                        positiveColor: '#10b981',
-                        negativeColor: '#ef4444',
-                        totalColor: '#3b82f6'
-                    }
-                }
-            });
-        }
-
         function updateWaterfallChart() {
-            const start = 1000;
-            const revenue = Math.floor(Math.random() * 500) + 200;
-            const expenses = -Math.floor(Math.random() * 300) - 100;
-            const investments = Math.floor(Math.random() * 200) + 50;
-            const end = start + revenue + expenses + investments;
+            const startingBalance = Math.floor(Math.random() * 5000) + 8000;
+            const revenue = Math.floor(Math.random() * 3000) + 4000;
+            const costOfSales = -(Math.floor(Math.random() * 1500) + 1500);
+            const opEx = -(Math.floor(Math.random() * 1200) + 1200);
+            const taxes = -(Math.floor(Math.random() * 600) + 600);
+            const endingBalance = startingBalance + revenue + costOfSales + opEx + taxes;
 
             waterfallChart.update({
                 data: {
-                    labels: ['Start', 'Revenue', 'Expenses', 'Investments', 'End'],
+                    labels: ['Starting Balance', 'Revenue', 'Cost of Sales', 'Operating Expenses', 'Taxes', 'Ending Balance'],
                     datasets: [{
-                        data: [start, revenue, expenses, investments, end],
-                        isTotal: [false, false, false, false, true]
+                        data: [startingBalance, revenue, costOfSales, opEx, taxes, endingBalance],
+                        isTotal: [true, false, false, false, false, true],
+                        backgroundColor: ['#3b82f6', '#10b981', '#ef4444', '#ef4444', '#ef4444', '#3b82f6']
                     }]
-                }
-            });
-        }
-
-        // Conversion Funnel Chart
-        let conversionFunnelChart;
-        function initConversionFunnelChart() {
-            conversionFunnelChart = new ChartMaster('conversionFunnelChart', {
-                type: 'conversionFunnel',
-                data: {
-                    labels: ['Visitors', 'Leads', 'MQL', 'SQL', 'Customers'],
-                    datasets: [{
-                        data: [1000, 800, 600, 400, 200]
-                    }]
-                },
-                options: {
-                    plugins: {
-                        title: {
-                            display: true,
-                            text: 'Marketing Conversion Funnel'
-                        }
-                    },
-                    conversionFunnel: {
-                        showConversionRates: true
-                    }
                 }
             });
         }
 
         function updateConversionFunnelChart() {
-            const base = Math.floor(Math.random() * 500) + 500;
-            const newData = [
-                base,
-                Math.floor(base * 0.8),
-                Math.floor(base * 0.6),
-                Math.floor(base * 0.4),
-                Math.floor(base * 0.2)
-            ];
+            const base = Math.floor(Math.random() * 30) + 60;
+            const stage2 = Math.floor(base * (0.7 + Math.random() * 0.15));  // 70-85% conversion
+            const stage3 = Math.floor(stage2 * (0.9 + Math.random() * 0.1)); // 90-100% conversion
+            const stage4 = Math.floor(stage3 * (0.2 + Math.random() * 0.15)); // 20-35% conversion
+
             conversionFunnelChart.update({
                 data: {
-                    labels: ['Visitors', 'Leads', 'MQL', 'SQL', 'Customers'],
+                    labels: ['New Lead', 'Working - Contacted', 'Contacted - Interested', 'Closed - Committed'],
                     datasets: [{
-                        data: newData
+                        data: [base, stage2, stage3, stage4],
+                        backgroundColor: ['#6BA3F9', '#6BA3F9', '#6BA3F9', '#10b981']
                     }]
                 }
             });
