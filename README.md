@@ -1,524 +1,569 @@
-# ChartMaster.js
+# ChartMaster.js - Complete Documentation
 
-A lightweight, feature-rich JavaScript charting library with no dependencies. Create beautiful, interactive charts with smooth animations and modern design.
+## Table of Contents
+1. [Introduction](#introduction)
+2. [Installation](#installation)
+3. [Basic Usage](#basic-usage)
+4. [Chart Types](#chart-types)
+5. [Configuration Options](#configuration-options)
+6. [Methods](#methods)
+7. [Events](#events)
+8. [Advanced Features](#advanced-features)
+9. [Working Examples](#working-examples)
 
-## Features
+---
 
-### Chart Types
-- **Line Chart** - Smooth curves with optional fill
-- **Bar Chart** - Vertical bars with rounded corners
-- **Pie Chart** - Classic circular segments
-- **Doughnut Chart** - Pie chart with hollow center
-- **Funnel Chart** - Conversion/process visualization
-- **Gauge Chart** - Speedometer-style metric display
+## Introduction
 
-### Interactive Features
-- **Hover Effects** - Interactive tooltips and highlights
-- **Click Events** - Custom click handlers
-- **Detailed View** - Double-click for in-depth data analysis
-- **Touch Support** - Full mobile and tablet compatibility
-- **Responsive** - Auto-resize on window changes
+ChartMaster.js is a professional, lightweight JavaScript charting library built on HTML5 Canvas. It provides beautiful, interactive charts with smooth animations, tooltips, and advanced features like detailed views.
 
-### Animation
-- **Smooth Animations** - Multiple easing functions
-- **Configurable Duration** - Control animation speed
-- **Progressive Rendering** - Staggered element appearance
+**Key Features:**
+- 9 chart types (Line, Bar, Horizontal Bar, Pie, Doughnut, Funnel, Gauge, Waterfall, Conversion Funnel)
+- Smooth animations with multiple easing functions
+- Interactive tooltips and detailed views
+- Responsive design
+- Touch support
+- Gradient effects and shadows
+- Zero dependencies
 
-### Customization
-- **Custom Colors** - Full color control for all elements
-- **Flexible Layout** - Adjustable padding and spacing
-- **Legend** - Show/hide with positioning options
-- **Grid & Axes** - Configurable display options
-- **Background Color** - Set canvas background
+---
 
 ## Installation
 
-Include the script in your HTML:
-
+### Option 1: Direct Include
 ```html
 <script src="ChartMaster.js"></script>
 ```
 
-## Quick Start
+### Option 2: Module Import
+```javascript
+const ChartMaster = require('./ChartMaster.js');
+```
 
+---
+
+## Basic Usage
+
+### HTML Structure
 ```html
-<canvas id="myChart" width="600" height="400"></canvas>
+<canvas id="myChart" width="800" height="400"></canvas>
+```
 
-<script>
-  const chart = new ChartMaster('myChart', {
+### JavaScript Initialization
+```javascript
+const chart = new ChartMaster('myChart', {
     type: 'line',
     data: {
-      labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
-      datasets: [{
-        data: [12, 19, 3, 5, 2],
-        borderColor: '#3b82f6',
-        backgroundColor: '#3b82f6'
-      }]
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
+        datasets: [{
+            data: [12, 19, 3, 5, 2],
+            backgroundColor: '#3b82f6',
+            borderColor: '#2563eb'
+        }]
+    },
+    options: {
+        // Configuration options
     }
-  });
-</script>
+});
 ```
+
+---
 
 ## Chart Types
 
-### Line Chart
+### 1. Line Chart
+Displays data as connected points on a line.
 
-```javascript
-new ChartMaster('canvas', {
-  type: 'line',
-  data: {
-    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
-    datasets: [{
-      data: [12, 19, 3, 5, 15],
-      borderColor: '#3b82f6',
-      backgroundColor: '#3b82f6'
-    }]
-  },
-  options: {
-    elements: {
-      line: {
-        tension: 0.4,  // Curve smoothness
-        fill: true     // Fill under line
-      }
-    }
-  }
-});
-```
+**Type:** `'line'`
 
-### Bar Chart
+**Dataset Properties:**
+- `data`: Array of numbers
+- `borderColor`: Line color (string)
+- `backgroundColor`: Fill color (string)
+- `borderWidth`: Line thickness (number, default: 3)
 
-```javascript
-new ChartMaster('canvas', {
-  type: 'bar',
-  data: {
-    labels: ['Q1', 'Q2', 'Q3', 'Q4'],
-    datasets: [{
-      data: [45, 67, 89, 72],
-      backgroundColor: ['#ef4444', '#f59e0b', '#10b981', '#3b82f6']
-    }]
-  }
-});
-```
+### 2. Bar Chart
+Displays vertical bars.
 
-### Pie Chart
+**Type:** `'bar'`
 
-```javascript
-new ChartMaster('canvas', {
-  type: 'pie',
-  data: {
-    labels: ['Red', 'Blue', 'Yellow'],
-    datasets: [{
-      data: [300, 50, 100],
-      backgroundColor: ['#ef4444', '#3b82f6', '#f59e0b']
-    }]
-  }
-});
-```
+**Dataset Properties:**
+- `data`: Array of numbers
+- `backgroundColor`: Bar colors (string or array)
+- `borderColor`: Border color (string)
+- `borderWidth`: Border thickness (number)
 
-### Doughnut Chart
+### 3. Horizontal Bar Chart
+Displays horizontal bars.
 
-```javascript
-new ChartMaster('canvas', {
-  type: 'doughnut',
-  data: {
-    labels: ['Desktop', 'Mobile', 'Tablet'],
-    datasets: [{
-      data: [60, 30, 10],
-      backgroundColor: ['#3b82f6', '#10b981', '#f59e0b']
-    }]
-  }
-});
-```
+**Type:** `'horizontalBar'`
 
-### Funnel Chart
+**Dataset Properties:**
+Same as Bar Chart
 
-```javascript
-new ChartMaster('canvas', {
-  type: 'funnel',
-  data: {
-    labels: ['Visitors', 'Signups', 'Active', 'Paid'],
-    datasets: [{
-      data: [1000, 500, 250, 100],
-      backgroundColor: ['#3b82f6', '#10b981', '#f59e0b', '#ef4444']
-    }]
-  },
-  options: {
-    funnel: {
-      width: 0.7,      // Funnel width (70% of chart area)
-      gap: 0.02,       // Gap between segments
-      sort: 'desc'     // Sort: 'desc', 'asc', 'none'
-    }
-  }
-});
-```
+### 4. Pie Chart
+Displays circular segments.
 
-### Gauge Chart
+**Type:** `'pie'`
 
-```javascript
-new ChartMaster('canvas', {
-  type: 'gauge',
-  data: {
-    labels: ['Performance'],
-    datasets: [{
-      data: [75]  // Value between 0-100
-    }]
-  },
-  options: {
-    gauge: {
-      startAngle: -135,
-      endAngle: 135,
-      thickness: 0.25,
-      showValue: true,
-      valueFormat: (value) => value.toFixed(1) + '%',
-      ranges: [
-        { min: 0, max: 33, color: '#ef4444' },   // Red
-        { min: 33, max: 66, color: '#f59e0b' },  // Orange
-        { min: 66, max: 100, color: '#10b981' }  // Green
-      ]
-    }
-  }
-});
-```
+**Dataset Properties:**
+- `data`: Array of numbers
+- `backgroundColor`: Array of colors for each segment
+
+### 5. Doughnut Chart
+Pie chart with hollow center.
+
+**Type:** `'doughnut'`
+
+**Dataset Properties:**
+Same as Pie Chart
+
+### 6. Funnel Chart
+Displays descending stages.
+
+**Type:** `'funnel'`
+
+**Dataset Properties:**
+- `data`: Array of numbers
+- `backgroundColor`: Array of colors
+
+**Special Options:**
+- `funnel.width`: Funnel width ratio (0-1, default: 0.7)
+- `funnel.gap`: Gap between segments (0-1, default: 0.02)
+- `funnel.sort`: Sort order ('desc', 'asc', or 'none')
+
+### 7. Gauge Chart
+Displays single value on arc.
+
+**Type:** `'gauge'`
+
+**Dataset Properties:**
+- `data`: Array with single number (0-100)
+
+**Special Options:**
+- `gauge.startAngle`: Start angle in degrees (default: -135)
+- `gauge.endAngle`: End angle in degrees (default: 135)
+- `gauge.thickness`: Arc thickness ratio (default: 0.22)
+- `gauge.showValue`: Show center value (boolean)
+- `gauge.valueFormat`: Function to format value
+- `gauge.ranges`: Array of color ranges
+
+### 8. Waterfall Chart
+Shows cumulative effect of sequential values.
+
+**Type:** `'waterfall'`
+
+**Dataset Properties:**
+- `data`: Array of numbers (positive/negative)
+- `isTotal`: Array of booleans marking total bars
+
+**Special Options:**
+- `waterfall.positiveColor`: Color for positive values
+- `waterfall.negativeColor`: Color for negative values
+- `waterfall.totalColor`: Color for total bars
+- `waterfall.connectorLine`: Show connector lines (boolean)
+- `waterfall.showValues`: Show value labels (boolean)
+
+### 9. Conversion Funnel Chart
+Shows conversion rates between stages.
+
+**Type:** `'conversionFunnel'`
+
+**Dataset Properties:**
+- `data`: Array of numbers (descending values)
+
+**Special Options:**
+- `conversionFunnel.width`: Bar width ratio (default: 0.8)
+- `conversionFunnel.showConversionRates`: Show rates (boolean)
+- `conversionFunnel.showValues`: Show values on bars (boolean)
+- `conversionFunnel.valueFontSize`: Value text size
+- `conversionFunnel.labelFontSize`: Label text size
+
+---
 
 ## Configuration Options
 
-### Global Options
+### Core Options
 
+#### `type` (string)
+Chart type: `'line'`, `'bar'`, `'horizontalBar'`, `'pie'`, `'doughnut'`, `'funnel'`, `'gauge'`, `'waterfall'`, `'conversionFunnel'`
+
+#### `data` (object)
 ```javascript
-{
-  responsive: true,              // Auto-resize on window resize
-  maintainAspectRatio: true,     // Maintain aspect ratio
-  backgroundColor: '#ffffff',    // Canvas background color
-  
-  animation: {
-    duration: 800,               // Animation duration in ms
-    easing: 'easeOutQuart'       // Easing function
-  },
-  
-  layout: {
-    padding: {
-      top: 20,
-      right: 20,
-      bottom: 20,
-      left: 20
-    }
-  }
+data: {
+    labels: ['Label1', 'Label2', ...],
+    datasets: [{
+        data: [value1, value2, ...],
+        backgroundColor: '#color' or ['#color1', '#color2', ...],
+        borderColor: '#color',
+        borderWidth: number
+    }]
 }
 ```
 
-### Plugins
+#### `backgroundColor` (string)
+Canvas background color (default: `'#ffffff'`)
 
+---
+
+### Animation Options
+
+```javascript
+animation: {
+    duration: 900,           // Animation duration in ms
+    easing: 'easeOutQuart'   // Easing function
+}
+```
+
+**Available Easing Functions:**
+- `'linear'`
+- `'easeInQuad'`
+- `'easeOutQuad'`
+- `'easeInOutQuad'`
+- `'easeOutQuart'` (default)
+- `'easeInOutCubic'`
+- `'easeOutElastic'`
+- `'easeOutBack'`
+
+---
+
+### Plugin Options
+
+#### Title Plugin
 ```javascript
 plugins: {
-  title: {
-    display: true,
-    text: 'My Chart',
-    color: '#333',
-    font: {
-      size: 16,
-      weight: 'bold',
-      family: 'Arial'
-    },
-    padding: 20
-  },
-  
-  legend: {
-    display: true,
-    position: 'top',  // 'top' or 'bottom'
-    labels: {
-      color: '#666',
-      font: {
-        size: 12,
-        family: 'Arial'
-      },
-      padding: 10
+    title: {
+        display: false,
+        text: 'Chart Title',
+        color: '#1a1a1a',
+        font: {
+            size: 18,
+            weight: 'bold',
+            family: 'Arial'
+        },
+        padding: {
+            top: 12,
+            bottom: 16
+        },
+        align: 'center'  // 'start', 'center', 'end'
     }
-  },
-  
-  tooltip: {
-    enabled: true,
-    mode: 'nearest'
-  }
 }
 ```
 
-### Scales (Line & Bar Charts)
+#### Legend Plugin
+```javascript
+plugins: {
+    legend: {
+        display: true,
+        position: 'top',  // 'top', 'bottom', 'left', 'right'
+        align: 'center',  // 'start', 'center', 'end'
+        labels: {
+            color: '#666',
+            font: {
+                size: 12,
+                family: 'Arial',
+                weight: '500'
+            },
+            padding: 14,
+            boxWidth: 14,
+            usePointStyle: false
+        },
+        padding: 16
+    }
+}
+```
 
+#### Tooltip Plugin
+```javascript
+plugins: {
+    tooltip: {
+        enabled: true,
+        mode: 'nearest'  // Interaction mode
+    }
+}
+```
+
+#### Detailed View Plugin
+```javascript
+plugins: {
+    detailedView: {
+        enabled: true,
+        trigger: 'doubleClick',  // 'doubleClick', 'longPress', 'click'
+        position: 'auto',        // 'auto', 'top', 'bottom', 'left', 'right'
+        showStats: true,         // Show statistics
+        showRawData: false,      // Show all data points
+        customFields: [          // Add custom fields
+            {
+                label: 'Custom Field',
+                value: function(data, index, chart) {
+                    return 'Custom Value';
+                }
+            }
+        ],
+        template: null,          // Custom HTML template function
+        style: {}                // Custom CSS properties
+    }
+}
+```
+
+---
+
+### Scale Options
+
+#### X-Axis
 ```javascript
 scales: {
-  x: {
-    display: true,
-    grid: {
-      display: true,
-      color: 'rgba(0, 0, 0, 0.08)'
-    },
-    ticks: {
-      color: '#666',
-      font: { size: 11 }
+    x: {
+        display: true,
+        title: {
+            display: false,
+            text: 'X-Axis Label',
+            color: '#666',
+            font: {
+                size: 12,
+                family: 'Arial'
+            }
+        },
+        grid: {
+            display: true,
+            color: 'rgba(0, 0, 0, 0.06)'
+        },
+        ticks: {
+            padding: 10,
+            maxRotation: 0,
+            color: '#666'
+        }
     }
-  },
-  y: {
-    display: true,
-    beginAtZero: true,
-    grid: {
-      display: true,
-      color: 'rgba(0, 0, 0, 0.08)'
-    },
-    ticks: {
-      color: '#666',
-      font: { size: 11 }
-    }
-  }
 }
 ```
 
-### Elements
+#### Y-Axis
+```javascript
+scales: {
+    y: {
+        display: true,
+        beginAtZero: true,
+        title: {
+            display: false,
+            text: 'Y-Axis Label',
+            color: '#666',
+            font: {
+                size: 12,
+                family: 'Arial'
+            }
+        },
+        grid: {
+            display: true,
+            color: 'rgba(0, 0, 0, 0.06)'
+        },
+        ticks: {
+            padding: 10,
+            color: '#666'
+        }
+    }
+}
+```
 
+---
+
+### Layout Options
+
+```javascript
+layout: {
+    padding: {
+        top: 20,
+        right: 20,
+        bottom: 20,
+        left: 20
+    },
+    autoPadding: true
+}
+```
+
+---
+
+### Element Options
+
+#### Line Elements
 ```javascript
 elements: {
-  line: {
-    borderWidth: 2,
-    tension: 0.4,      // 0 = straight, 1 = very curved
-    fill: false
-  },
-  
-  point: {
-    radius: 3,
-    hoverRadius: 5,
-    hitRadius: 10      // Hit detection area
-  },
-  
-  bar: {
-    borderWidth: 0,
-    borderRadius: 4
-  },
-  
-  arc: {
-    borderWidth: 2,
-    borderColor: '#fff',
-    hoverOffset: 10    // Offset on hover for pie/doughnut
-  }
+    line: {
+        borderWidth: 3,
+        tension: 0.4,      // Curve tension (0 = straight)
+        fill: false,       // Fill area under line
+        gradient: true,    // Use gradient fill
+        shadow: true,      // Drop shadow
+        glowEffect: false  // Glow effect
+    }
 }
 ```
 
-### Detailed View
-
+#### Point Elements
 ```javascript
-detailedView: {
-  enabled: true,
-  trigger: 'doubleClick',  // 'doubleClick' or 'longPress'
-  showStats: true,         // Show statistics (avg, median, etc.)
-  showRawData: false       // Show all data points
+elements: {
+    point: {
+        radius: 4,
+        hoverRadius: 6,
+        hitRadius: 12,     // Click detection radius
+        shadow: true
+    }
 }
 ```
 
-## Events
-
-### onClick
-
+#### Bar Elements
 ```javascript
-onClick: function(event, index, data, chart) {
-  console.log('Clicked:', data.label, data.value);
+elements: {
+    bar: {
+        borderWidth: 0,
+        borderRadius: 6,
+        gradient: true,
+        shadow: true,
+        hoverScale: 1.03   // Scale on hover
+    }
 }
 ```
 
-### onHover
-
+#### Arc Elements (Pie/Doughnut)
 ```javascript
-onHover: function(event, index, data, chart) {
-  if (data) {
-    console.log('Hovering:', data.label);
-  }
+elements: {
+    arc: {
+        borderWidth: 3,
+        borderColor: '#fff',
+        hoverOffset: 12,
+        shadow: true
+    }
 }
 ```
 
-### onDetailedView
-
-```javascript
-onDetailedView: function(event, index, data, chart) {
-  console.log('Detailed view opened for:', data.label);
-}
-```
+---
 
 ## Methods
 
-### update()
-
-Update chart data or options:
-
-```javascript
-chart.update({
-  data: {
-    labels: ['A', 'B', 'C'],
-    datasets: [{
-      data: [10, 20, 30]
-    }]
-  }
-});
-```
-
-### setBackgroundColor()
-
-Change background color:
-
-```javascript
-chart.setBackgroundColor('#f0f0f0');
-```
-
-### render()
-
-Re-render chart with animation:
+### `render()`
+Renders the chart with animation.
 
 ```javascript
 chart.render();
 ```
 
-### redraw()
-
-Redraw chart without animation:
+### `redraw()`
+Redraws the chart immediately without animation.
 
 ```javascript
 chart.redraw();
 ```
 
-### destroy()
+### `update(newData)`
+Updates chart with new data or options.
 
-Clean up and remove chart:
+```javascript
+chart.update({
+    data: newDataObject,
+    options: newOptionsObject,
+    type: 'bar',
+    backgroundColor: '#f0f0f0'
+});
+```
+
+### `setBackgroundColor(color)`
+Changes canvas background color.
+
+```javascript
+chart.setBackgroundColor('#ffffff');
+```
+
+### `destroy()`
+Removes event listeners and cleans up.
 
 ```javascript
 chart.destroy();
 ```
 
-## Animation Easing Functions
+### `clear()`
+Clears the canvas.
 
-Available easing functions:
-- `linear`
-- `easeInQuad`
-- `easeOutQuad`
-- `easeInOutQuad`
-- `easeOutQuart` (default)
-- `easeInOutCubic`
-- `easeOutElastic`
+```javascript
+chart.clear();
+```
+
+---
+
+## Events
+
+### `onClick`
+Triggered when an element is clicked.
 
 ```javascript
 options: {
-  animation: {
-    duration: 1000,
-    easing: 'easeOutElastic'
-  }
+    onClick: function(event, index, data, chart) {
+        console.log('Clicked:', data);
+    }
 }
 ```
 
-## Color Formats
-
-ChartMaster supports multiple color formats:
-
-```javascript
-// Hex
-backgroundColor: '#3b82f6'
-
-// RGB
-backgroundColor: 'rgb(59, 130, 246)'
-
-// Color arrays (for multiple elements)
-backgroundColor: ['#ef4444', '#10b981', '#3b82f6']
-```
-
-## Browser Support
-
-- Chrome (latest)
-- Firefox (latest)
-- Safari (latest)
-- Edge (latest)
-- Mobile browsers (iOS Safari, Chrome Mobile)
-
-## Performance Tips
-
-1. **Use appropriate canvas size** - Larger canvases require more processing
-2. **Limit data points** - For line charts, consider data sampling for large datasets
-3. **Disable animations** - Set `animation.duration: 0` for instant rendering
-4. **Cache instances** - Reuse chart instances with `update()` instead of recreating
-
-## Examples
-
-### Multi-Color Bar Chart
+### `onHover`
+Triggered when hovering over an element.
 
 ```javascript
-new ChartMaster('canvas', {
-  type: 'bar',
-  data: {
-    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple'],
-    datasets: [{
-      data: [12, 19, 3, 5, 2],
-      backgroundColor: [
-        '#ef4444',
-        '#3b82f6',
-        '#f59e0b',
-        '#10b981',
-        '#8b5cf6'
-      ]
-    }]
-  }
-});
-```
-
-### Filled Line Chart
-
-```javascript
-new ChartMaster('canvas', {
-  type: 'line',
-  data: {
-    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-    datasets: [{
-      data: [0, 10, 5, 15, 10, 20],
-      borderColor: '#3b82f6',
-      backgroundColor: '#3b82f6'
-    }]
-  },
-  options: {
-    elements: {
-      line: {
-        fill: true,
-        tension: 0.4
-      }
+options: {
+    onHover: function(event, index, data, chart) {
+        console.log('Hovered:', data);
     }
-  }
-});
+}
 ```
 
-### Custom Gauge with Click Handler
+### `onDetailedView`
+Triggered when detailed view is opened.
 
 ```javascript
-new ChartMaster('canvas', {
-  type: 'gauge',
-  data: {
-    labels: ['CPU Usage'],
-    datasets: [{ data: [67] }]
-  },
-  options: {
-    gauge: {
-      valueFormat: (value) => value.toFixed(0) + '%',
-      ranges: [
-        { min: 0, max: 50, color: '#10b981' },
-        { min: 50, max: 80, color: '#f59e0b' },
-        { min: 80, max: 100, color: '#ef4444' }
-      ]
-    },
-    onClick: function(e, index, data) {
-      alert('CPU Usage: ' + data.value + '%');
+options: {
+    onDetailedView: function(event, index, data, chart) {
+        console.log('Detailed view opened:', data);
     }
-  }
-});
+}
 ```
 
-## License
+---
 
-MIT License - Feel free to use in personal and commercial projects.
+## Advanced Features
 
-## Version
+### Custom Detailed View Template
 
-Current version: 3.0.0
+```javascript
+plugins: {
+    detailedView: {
+        enabled: true,
+        template: function(data, stats, chart) {
+            return `
+                <h4>Custom Template</h4>
+                <div class="data-point">
+                    <span>Value:</span>
+                    <span>${data.value}</span>
+                </div>
+                <div class="data-point">
+                    <span>Average:</span>
+                    <span>${stats.average.toFixed(2)}</span>
+                </div>
+            `;
+        }
+    }
+}
+```
 
-## Support
+### Custom Gauge Ranges
 
-For issues and feature requests, please refer to the project repository.
+```javascript
+gauge: {
+    ranges: [
+        { min: 0, max: 33, color: '#ef4444' },
+        { min: 33, max: 66, color: '#f59e0b' },
+        { min: 66, max: 100, color: '#10b981' }
+    ]
+}
+```
+
+### Responsive Design
+
+Charts automatically resize when the window is resized if `responsive: true` (default).
+
+---

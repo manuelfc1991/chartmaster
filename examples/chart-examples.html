@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChartMaster.js - Interactive Chart Examples</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f7fa;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 40px;
+            color: #2c3e50;
+        }
+
+        .chart-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 30px;
+        }
+
+        .chart-container {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .chart-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        .chart-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #2c3e50;
+            text-align: center;
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        .chart-actions {
+            margin-top: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.2s ease;
+        }
+
+        button:hover {
+            background: #2980b9;
+        }
+
+        .instructions {
+            text-align: center;
+            margin-top: 40px;
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>ChartMaster.js - Interactive Chart Examples</h1>
+
+        <div class="chart-grid">
+            <!-- Line Chart -->
+            <div class="chart-container">
+                <div class="chart-title">Line Chart</div>
+                <div class="chart-wrapper">
+                    <canvas id="lineChart"></canvas>
+                </div>
+                <div class="chart-actions">
+                    <button onclick="updateLineChart()">Update Data</button>
+                </div>
+            </div>
+
+            <!-- Bar Chart -->
+            <div class="chart-container">
+                <div class="chart-title">Bar Chart</div>
+                <div class="chart-wrapper">
+                    <canvas id="barChart"></canvas>
+                </div>
+                <div class="chart-actions">
+                    <button onclick="updateBarChart()">Update Data</button>
+                </div>
+            </div>
+
+            <!-- Horizontal Bar Chart -->
+            <div class="chart-container">
+                <div class="chart-title">Horizontal Bar Chart</div>
+                <div class="chart-wrapper">
+                    <canvas id="horizontalBarChart"></canvas>
+                </div>
+                <div class="chart-actions">
+                    <button onclick="updateHorizontalBarChart()">Update Data</button>
+                </div>
+            </div>
+
+            <!-- Pie Chart -->
+            <div class="chart-container">
+                <div class="chart-title">Pie Chart</div>
+                <div class="chart-wrapper">
+                    <canvas id="pieChart"></canvas>
+                </div>
+                <div class="chart-actions">
+                    <button onclick="updatePieChart()">Update Data</button>
+                </div>
+            </div>
+
+            <!-- Doughnut Chart -->
+            <div class="chart-container">
+                <div class="chart-title">Doughnut Chart</div>
+                <div class="chart-wrapper">
+                    <canvas id="doughnutChart"></canvas>
+                </div>
+                <div class="chart-actions">
+                    <button onclick="updateDoughnutChart()">Update Data</button>
+                </div>
+            </div>
+
+            <!-- Funnel Chart -->
+            <div class="chart-container">
+                <div class="chart-title">Funnel Chart</div>
+                <div class="chart-wrapper">
+                    <canvas id="funnelChart"></canvas>
+                </div>
+                <div class="chart-actions">
+                    <button onclick="updateFunnelChart()">Update Data</button>
+                </div>
+            </div>
+
+            <!-- Gauge Chart -->
+            <div class="chart-container">
+                <div class="chart-title">Gauge Chart</div>
+                <div class="chart-wrapper">
+                    <canvas id="gaugeChart"></canvas>
+                </div>
+                <div class="chart-actions">
+                    <button onclick="updateGaugeChart()">Update Data</button>
+                </div>
+            </div>
+
+            <!-- Waterfall Chart -->
+            <div class="chart-container">
+                <div class="chart-title">Waterfall Chart</div>
+                <div class="chart-wrapper">
+                    <canvas id="waterfallChart"></canvas>
+                </div>
+                <div class="chart-actions">
+                    <button onclick="updateWaterfallChart()">Update Data</button>
+                </div>
+            </div>
+
+            <!-- Conversion Funnel Chart -->
+            <div class="chart-container">
+                <div class="chart-title">Conversion Funnel Chart</div>
+                <div class="chart-wrapper">
+                    <canvas id="conversionFunnelChart"></canvas>
+                </div>
+                <div class="chart-actions">
+                    <button onclick="updateConversionFunnelChart()">Update Data</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="instructions">
+            <p>Hover over charts to see tooltips. Click on data points to view detailed information.</p>
+            <p>Double-click on charts to open detailed view (where supported).</p>
+        </div>
+    </div>
+    <script src="../dist/chartmaster.js"></script>
+    <script>
+        // Initialize charts when the page loads
+        document.addEventListener('DOMContentLoaded', function () {
+            initLineChart();
+            initBarChart();
+            initHorizontalBarChart();
+            initPieChart();
+            initDoughnutChart();
+            initFunnelChart();
+            initGaugeChart();
+            initWaterfallChart();
+            initConversionFunnelChart();
+        });
+
+        // Line Chart
+        let lineChart;
+        function initLineChart() {
+            lineChart = new ChartMaster('lineChart', {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+                    datasets: [{
+                        data: [65, 59, 80, 81, 56, 55, 40],
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 3
+                    }]
+                },
+                options: {
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Monthly Sales Data'
+                        },
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        function updateLineChart() {
+            const newData = Array.from({ length: 7 }, () => Math.floor(Math.random() * 100));
+            lineChart.update({
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+                    datasets: [{
+                        data: newData,
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 3
+                    }]
+                }
+            });
+        }
+
+        // Bar Chart
+        let barChart;
+        function initBarChart() {
+            barChart = new ChartMaster('barChart', {
+                type: 'bar',
+                data: {
+                    labels: ['Product A', 'Product B', 'Product C', 'Product D', 'Product E'],
+                    datasets: [{
+                        data: [12, 19, 3, 5, 2],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.8)',
+                            'rgba(54, 162, 235, 0.8)',
+                            'rgba(255, 206, 86, 0.8)',
+                            'rgba(75, 192, 192, 0.8)',
+                            'rgba(153, 102, 255, 0.8)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Product Sales'
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        function updateBarChart() {
+            const newData = Array.from({ length: 5 }, () => Math.floor(Math.random() * 20));
+            barChart.update({
+                data: {
+                    labels: ['Product A', 'Product B', 'Product C', 'Product D', 'Product E'],
+                    datasets: [{
+                        data: newData,
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.8)',
+                            'rgba(54, 162, 235, 0.8)',
+                            'rgba(255, 206, 86, 0.8)',
+                            'rgba(75, 192, 192, 0.8)',
+                            'rgba(153, 102, 255, 0.8)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                }
+            });
+        }
+
+        // Horizontal Bar Chart
+        let horizontalBarChart;
+        function initHorizontalBarChart() {
+            horizontalBarChart = new ChartMaster('horizontalBarChart', {
+                type: 'horizontalBar',
+                data: {
+                    labels: ['Marketing', 'Sales', 'IT', 'HR', 'Finance'],
+                    datasets: [{
+                        data: [12, 19, 3, 5, 2],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.8)',
+                            'rgba(54, 162, 235, 0.8)',
+                            'rgba(255, 206, 86, 0.8)',
+                            'rgba(75, 192, 192, 0.8)',
+                            'rgba(153, 102, 255, 0.8)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Department Budget Allocation'
+                        }
+                    },
+                    scales: {
+                        x: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        function updateHorizontalBarChart() {
+            const newData = Array.from({ length: 5 }, () => Math.floor(Math.random() * 20));
+            horizontalBarChart.update({
+                data: {
+                    labels: ['Marketing', 'Sales', 'IT', 'HR', 'Finance'],
+                    datasets: [{
+                        data: newData,
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.8)',
+                            'rgba(54, 162, 235, 0.8)',
+                            'rgba(255, 206, 86, 0.8)',
+                            'rgba(75, 192, 192, 0.8)',
+                            'rgba(153, 102, 255, 0.8)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                }
+            });
+        }
+
+        // Pie Chart
+        let pieChart;
+        function initPieChart() {
+            pieChart = new ChartMaster('pieChart', {
+                type: 'pie',
+                data: {
+                    labels: ['Direct', 'Social Media', 'Email', 'Referral', 'Other'],
+                    datasets: [{
+                        data: [300, 150, 100, 50, 75],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.8)',
+                            'rgba(54, 162, 235, 0.8)',
+                            'rgba(255, 206, 86, 0.8)',
+                            'rgba(75, 192, 192, 0.8)',
+                            'rgba(153, 102, 255, 0.8)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)'
+                        ],
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Traffic Sources'
+                        }
+                    }
+                }
+            });
+        }
+
+        function updatePieChart() {
+            const newData = Array.from({ length: 5 }, () => Math.floor(Math.random() * 300) + 50);
+            pieChart.update({
+                data: {
+                    labels: ['Direct', 'Social Media', 'Email', 'Referral', 'Other'],
+                    datasets: [{
+                        data: newData,
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.8)',
+                            'rgba(54, 162, 235, 0.8)',
+                            'rgba(255, 206, 86, 0.8)',
+                            'rgba(75, 192, 192, 0.8)',
+                            'rgba(153, 102, 255, 0.8)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)'
+                        ],
+                        borderWidth: 2
+                    }]
+                }
+            });
+        }
+
+        // Doughnut Chart
+        let doughnutChart;
+        function initDoughnutChart() {
+            doughnutChart = new ChartMaster('doughnutChart', {
+                type: 'doughnut',
+                data: {
+                    labels: ['Desktop', 'Mobile', 'Tablet'],
+                    datasets: [{
+                        data: [60, 30, 10],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.8)',
+                            'rgba(54, 162, 235, 0.8)',
+                            'rgba(255, 206, 86, 0.8)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)'
+                        ],
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Device Usage'
+                        }
+                    }
+                }
+            });
+        }
+
+        function updateDoughnutChart() {
+            const newData = Array.from({ length: 3 }, () => Math.floor(Math.random() * 60) + 10);
+            doughnutChart.update({
+                data: {
+                    labels: ['Desktop', 'Mobile', 'Tablet'],
+                    datasets: [{
+                        data: newData,
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.8)',
+                            'rgba(54, 162, 235, 0.8)',
+                            'rgba(255, 206, 86, 0.8)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)'
+                        ],
+                        borderWidth: 2
+                    }]
+                }
+            });
+        }
+
+        // Funnel Chart
+        let funnelChart;
+        function initFunnelChart() {
+            funnelChart = new ChartMaster('funnelChart', {
+                type: 'funnel',
+                data: {
+                    labels: ['Visitors', 'Leads', 'MQL', 'SQL', 'Customers'],
+                    datasets: [{
+                        data: [1000, 800, 600, 400, 200],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.8)',
+                            'rgba(255, 159, 64, 0.8)',
+                            'rgba(255, 205, 86, 0.8)',
+                            'rgba(75, 192, 192, 0.8)',
+                            'rgba(54, 162, 235, 0.8)'
+                        ]
+                    }]
+                },
+                options: {
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Sales Funnel'
+                        }
+                    },
+                    funnel: {
+                        sort: 'desc'
+                    }
+                }
+            });
+        }
+
+        function updateFunnelChart() {
+            const base = Math.floor(Math.random() * 500) + 500;
+            const newData = [
+                base,
+                Math.floor(base * 0.8),
+                Math.floor(base * 0.6),
+                Math.floor(base * 0.4),
+                Math.floor(base * 0.2)
+            ];
+            funnelChart.update({
+                data: {
+                    labels: ['Visitors', 'Leads', 'MQL', 'SQL', 'Customers'],
+                    datasets: [{
+                        data: newData,
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.8)',
+                            'rgba(255, 159, 64, 0.8)',
+                            'rgba(255, 205, 86, 0.8)',
+                            'rgba(75, 192, 192, 0.8)',
+                            'rgba(54, 162, 235, 0.8)'
+                        ]
+                    }]
+                }
+            });
+        }
+
+        // Gauge Chart
+        let gaugeChart;
+        function initGaugeChart() {
+            gaugeChart = new ChartMaster('gaugeChart', {
+                type: 'gauge',
+                data: {
+                    labels: ['Performance'],
+                    datasets: [{
+                        data: [75]
+                    }]
+                },
+                options: {
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Performance Meter'
+                        }
+                    },
+                    gauge: {
+                        ranges: [
+                            { min: 0, max: 33, color: '#ef4444' },
+                            { min: 33, max: 66, color: '#f59e0b' },
+                            { min: 66, max: 100, color: '#10b981' }
+                        ]
+                    }
+                }
+            });
+        }
+
+        function updateGaugeChart() {
+            const newValue = Math.floor(Math.random() * 100);
+            gaugeChart.update({
+                data: {
+                    labels: ['Performance'],
+                    datasets: [{
+                        data: [newValue]
+                    }]
+                }
+            });
+        }
+
+        // Waterfall Chart
+        let waterfallChart;
+        function initWaterfallChart() {
+            waterfallChart = new ChartMaster('waterfallChart', {
+                type: 'waterfall',
+                data: {
+                    labels: ['Start', 'Revenue', 'Expenses', 'Investments', 'End'],
+                    datasets: [{
+                        data: [1000, 500, -300, 200, 1400],
+                        isTotal: [false, false, false, false, true]
+                    }]
+                },
+                options: {
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Financial Flow'
+                        }
+                    },
+                    waterfall: {
+                        positiveColor: '#10b981',
+                        negativeColor: '#ef4444',
+                        totalColor: '#3b82f6'
+                    }
+                }
+            });
+        }
+
+        function updateWaterfallChart() {
+            const start = 1000;
+            const revenue = Math.floor(Math.random() * 500) + 200;
+            const expenses = -Math.floor(Math.random() * 300) - 100;
+            const investments = Math.floor(Math.random() * 200) + 50;
+            const end = start + revenue + expenses + investments;
+
+            waterfallChart.update({
+                data: {
+                    labels: ['Start', 'Revenue', 'Expenses', 'Investments', 'End'],
+                    datasets: [{
+                        data: [start, revenue, expenses, investments, end],
+                        isTotal: [false, false, false, false, true]
+                    }]
+                }
+            });
+        }
+
+        // Conversion Funnel Chart
+        let conversionFunnelChart;
+        function initConversionFunnelChart() {
+            conversionFunnelChart = new ChartMaster('conversionFunnelChart', {
+                type: 'conversionFunnel',
+                data: {
+                    labels: ['Visitors', 'Leads', 'MQL', 'SQL', 'Customers'],
+                    datasets: [{
+                        data: [1000, 800, 600, 400, 200]
+                    }]
+                },
+                options: {
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Marketing Conversion Funnel'
+                        }
+                    },
+                    conversionFunnel: {
+                        showConversionRates: true
+                    }
+                }
+            });
+        }
+
+        function updateConversionFunnelChart() {
+            const base = Math.floor(Math.random() * 500) + 500;
+            const newData = [
+                base,
+                Math.floor(base * 0.8),
+                Math.floor(base * 0.6),
+                Math.floor(base * 0.4),
+                Math.floor(base * 0.2)
+            ];
+            conversionFunnelChart.update({
+                data: {
+                    labels: ['Visitors', 'Leads', 'MQL', 'SQL', 'Customers'],
+                    datasets: [{
+                        data: newData
+                    }]
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>
